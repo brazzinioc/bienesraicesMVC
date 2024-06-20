@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function(){
+document.addEventListener('DOMContentLoaded', function () {
     eventListeners();
     darkMode()
 })
@@ -18,7 +18,7 @@ function darkMode() {
         } else {
             document.body.classList.remove('dark-mode')
         }
-    } )
+    })
 
     const botonDarkMode = document.querySelector('.dark-mode-boton')
     botonDarkMode.addEventListener('click', function () {
@@ -29,6 +29,10 @@ function darkMode() {
 function eventListeners() {
     const mobileMenu = document.querySelector('.mobile-menu')
     mobileMenu.addEventListener('click', navegacionResponsive)
+
+    //Muestra campos condicionales
+    const metodoContacto = document.querySelectorAll('input[name="contacto[contacto]"]');
+    metodoContacto.forEach(input => input.addEventListener('click', mostrarMetodosContacto));
 }
 
 function navegacionResponsive() {
@@ -42,4 +46,26 @@ function navegacionResponsive() {
 
     //Toggle hace lo mismo que el if else de arriba
     navegacion.classList.toggle('mostrar')
+}
+
+function mostrarMetodosContacto(e) {
+    const contactoDiv = document.querySelector('#contacto');
+    if (e.target.value === 'telefono') {
+        contactoDiv.innerHTML = `
+            <label for="telefono">Teléfono</label>
+            <input type="tel" placeholder="Tu Teléfono" id="telefono" name="contacto[telefono]">
+
+            <p>Elija fecha y hora para ser contactado por llamada</p>
+            <label for="fecha">Fecha</label>
+            <input type="date" id="fecha" name="contacto[fecha]">
+
+            <label for="hora">Hora</label>
+            <input type="time" id="hora" min="09:00" max="18:00" name="contacto[hora]">
+        `;
+    } else {
+        contactoDiv.innerHTML = `
+            <label for="email">Email</label>
+            <input type="email" placeholder="Tu Email" id="email" name="contacto[email]" required>
+        `;
+    }
 }
